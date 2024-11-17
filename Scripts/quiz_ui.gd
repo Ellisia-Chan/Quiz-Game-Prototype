@@ -1,26 +1,24 @@
 extends Node
 
+@export var question_label: Label
+@export var timer_label: Label
+@export var question_number_label: Label
+@export var button_group: Array[Button] = []
+
+@onready var timer: Timer = $Timer
+
 var question = []
 var current_question_index: int = 0
 var timer_value: int = 0
 var correct_answer_index: int = 0
 var max_question: int = 5
 
-@export var question_label: Label
-@export var timer_label: Label
-@export var button_1: Button
-@export var button_2: Button
-@export var button_3: Button
-
-@onready var timer: Timer = $Timer
-
 func _ready():
 	load_questions()
 	show_question(current_question_index)
 
-	button_1.connect("pressed", Callable(self, "_on_choice_pressed").bind(0))
-	button_2.connect("pressed", Callable(self, "_on_choice_pressed").bind(1))
-	button_3.connect("pressed", Callable(self, "_on_choice_pressed").bind(2))
+	for button in button_group:
+		button.connect("pressed", Callable(self, "_on_choice_pressed").bind(button_group.find(button)))
 
 # Load the questions from the JSON file
 # This function reads the JSON file, parses the content and stores it in the question array
@@ -47,6 +45,8 @@ func show_question(index: int) -> void:
 	question_label.text = question_data["question"]
 	timer_value = question_data["time"]
 	correct_answer_index = question_data["answer"]
+
+	question_number_label.text = str(current_question_index + 1) + " / " + str(max_question)
 	update_timer_display()
 
 	var choices = question_data["choices"].duplicate()
@@ -55,9 +55,14 @@ func show_question(index: int) -> void:
 
 	correct_answer_index = choices.find(correct_answer)
 
-	button_1.text = choices[0]
-	button_2.text = choices[1]
-	button_3.text = choices[2]
+	# This loop assigns the choices to the buttons and removes focus from any of them
+	var i: int = 0
+	for button in button_group:
+		if button.has_focus():
+			button.release_focus()
+			
+		button.text = choices[i]
+		i += 1
 
 	timer.start(1)
 
@@ -69,7 +74,7 @@ func _on_choice_pressed(choice_index: int) -> void:
 		show_feedback(true)
 	else:
 		show_feedback(false)
-
+		
 	current_question_index += 1
 	
 	if current_question_index < max_question and current_question_index < question.size():
@@ -79,7 +84,6 @@ func _on_choice_pressed(choice_index: int) -> void:
 
 func _on_timer_timeout() -> void:
 	timer_value -= 1
-	
 	update_timer_display()
 
 	if timer_value <= 0:
@@ -89,6 +93,7 @@ func _on_timer_timeout() -> void:
 func update_timer_display() -> void:
 	if timer_value >= 0:
 		timer_label.text = str(timer_value)
+	
 
 func show_feedback(is_correct: bool) -> void:
 	if is_correct:

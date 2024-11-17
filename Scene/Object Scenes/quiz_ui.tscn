@@ -4,7 +4,7 @@
 
 [node name="QuizUI" type="Node"]
 
-[node name="QuizUI" type="Control" parent="." node_paths=PackedStringArray("question_label", "timer_label", "button_1", "button_2", "button_3")]
+[node name="QuizUI" type="Control" parent="." node_paths=PackedStringArray("question_label", "timer_label", "question_number_label", "button_group")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,9 +14,8 @@ grow_vertical = 2
 script = ExtResource("1_mn5nq")
 question_label = NodePath("Panel/QuestionLabel")
 timer_label = NodePath("Panel/TimerLabel")
-button_1 = NodePath("MarginContainer/VBoxContainer/Button1")
-button_2 = NodePath("MarginContainer/VBoxContainer/Button2")
-button_3 = NodePath("MarginContainer/VBoxContainer/Button3")
+question_number_label = NodePath("Panel/QuestionNumberLabel")
+button_group = [NodePath("MarginContainer/VBoxContainer/Button1"), NodePath("MarginContainer/VBoxContainer/Button2"), NodePath("MarginContainer/VBoxContainer/Button3")]
 
 [node name="Panel" type="Panel" parent="QuizUI"]
 layout_mode = 1
@@ -60,6 +59,17 @@ text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="QuestionNumberLabel" type="Label" parent="QuizUI/Panel"]
+layout_mode = 1
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = -10.0
+theme_override_constants/line_spacing = 100
+theme_override_font_sizes/font_size = 24
+text = "1 / 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="MarginContainer" type="MarginContainer" parent="QuizUI"]
 layout_mode = 1
 anchors_preset = 8
@@ -67,10 +77,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -24.0
-offset_right = 175.0
-offset_bottom = 129.0
+offset_left = -200.0
+offset_top = 16.0
+offset_right = 200.0
+offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -82,15 +92,18 @@ alignment = 1
 
 [node name="Button1" type="Button" parent="QuizUI/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Button 1
 "
 
 [node name="Button2" type="Button" parent="QuizUI/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Button 2"
 
 [node name="Button3" type="Button" parent="QuizUI/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Button 3"
 
 [node name="Timer" type="Timer" parent="QuizUI"]
