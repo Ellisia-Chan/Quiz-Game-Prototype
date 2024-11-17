@@ -1,0 +1,98 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyjlvsfvik7vy"]
+
+[ext_resource type="Script" path="res://Scripts/quiz_ui.gd" id="1_mn5nq"]
+
+[node name="QuizUI" type="Node"]
+
+[node name="QuizUI" type="Control" parent="." node_paths=PackedStringArray("question_label", "timer_label", "button_1", "button_2", "button_3")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mn5nq")
+question_label = NodePath("Panel/QuestionLabel")
+timer_label = NodePath("Panel/TimerLabel")
+button_1 = NodePath("MarginContainer/VBoxContainer/Button1")
+button_2 = NodePath("MarginContainer/VBoxContainer/Button2")
+button_3 = NodePath("MarginContainer/VBoxContainer/Button3")
+
+[node name="Panel" type="Panel" parent="QuizUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -365.0
+offset_top = 80.0
+offset_right = 365.0
+offset_bottom = 270.0
+grow_horizontal = 2
+
+[node name="QuestionLabel" type="Label" parent="QuizUI/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -351.0
+offset_top = -78.0
+offset_right = 349.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Test Label"
+
+[node name="TimerLabel" type="Label" parent="QuizUI/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_top = -60.0
+offset_right = 28.0
+offset_bottom = -18.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="QuizUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -24.0
+offset_right = 175.0
+offset_bottom = 129.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuizUI/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Button1" type="Button" parent="QuizUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Button 1
+"
+
+[node name="Button2" type="Button" parent="QuizUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Button 2"
+
+[node name="Button3" type="Button" parent="QuizUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Button 3"
+
+[node name="Timer" type="Timer" parent="QuizUI"]
+
+[connection signal="timeout" from="QuizUI/Timer" to="QuizUI" method="_on_timer_timeout"]

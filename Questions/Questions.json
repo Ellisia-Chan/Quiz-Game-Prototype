@@ -1,0 +1,62 @@
+[
+	{
+		"question": "What is the capital of France?",
+		"choices": ["Paris", "Rome", "Berlin"],
+		"answer": 0,
+		"time": 10
+	},
+	{
+		"question": "What is 2 + 2?",
+		"choices": ["3", "4", "5"],
+		"answer": 1,
+		"time": 5
+	},
+	{
+		"question": "What is the largest planet in our solar system?",
+		"choices": ["Earth", "Jupiter", "Mars"],
+		"answer": 1,
+		"time": 8
+	},
+	{
+		"question": "What is the chemical symbol for water?",
+		"choices": ["H2O", "O2", "CO2"],
+		"answer": 0,
+		"time": 7
+	},
+	{
+		"question": "Who wrote 'Romeo and Juliet'?",
+		"choices": ["Shakespeare", "Dickens", "Hemingway"],
+		"answer": 0,
+		"time": 6
+	},
+	{
+		"question": "What is the square root of 64?",
+		"choices": ["6", "8", "10"],
+		"answer": 1,
+		"time": 5
+	},
+	{
+		"question": "Which element has the chemical symbol 'O'?",
+		"choices": ["Oxygen", "Osmium", "Ozone"],
+		"answer": 0,
+		"time": 6
+	},
+	{
+		"question": "Who painted the Mona Lisa?",
+		"choices": ["Van Gogh", "Da Vinci", "Picasso"],
+		"answer": 1,
+		"time": 9
+	},
+	{
+		"question": "What is the largest ocean on Earth?",
+		"choices": ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean"],
+		"answer": 2,
+		"time": 7
+	},
+	{
+		"question": "Which planet is known as the Red Planet?",
+		"choices": ["Earth", "Mars", "Venus"],
+		"answer": 1,
+		"time": 8
+	}
+]

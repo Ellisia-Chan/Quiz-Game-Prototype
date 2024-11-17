@@ -1,0 +1,96 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddl1nq7lqbmhw"]
+
+[ext_resource type="Script" path="res://Scripts/quiz_ui.gd" id="1_lmke2"]
+
+[node name="Main" type="Node2D"]
+
+[node name="QuizUI" type="Node" parent="."]
+script = ExtResource("1_lmke2")
+
+[node name="Panel" type="Panel" parent="QuizUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -376.0
+offset_top = -276.0
+offset_right = 358.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuestionLabel" type="Label" parent="QuizUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -260.0
+offset_right = 344.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Test Label"
+
+[node name="TimerLabel" type="Label" parent="QuizUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -325.0
+offset_right = 24.0
+offset_bottom = -284.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button1" type="Button" parent="QuizUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = -44.0
+offset_right = 234.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Button 1
+"
+
+[node name="Button2" type="Button" parent="QuizUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = 36.0
+offset_right = 234.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Button 2"
+
+[node name="Button3" type="Button" parent="QuizUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = 116.0
+offset_right = 234.0
+offset_bottom = 176.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Button 3"

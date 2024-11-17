@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddl1nq7lqbmhw"]
+
+[ext_resource type="PackedScene" uid="uid://dyjlvsfvik7vy" path="res://Scene/Object Scenes/quiz_ui.tscn" id="1_3yri0"]
+
+[node name="Main" type="Node2D"]
+
+[node name="QuizUI" parent="." instance=ExtResource("1_3yri0")]
