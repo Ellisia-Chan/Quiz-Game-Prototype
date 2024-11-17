@@ -89,6 +89,9 @@ func _on_timer_timeout() -> void:
 	if timer_value <= 0:
 		print("Time's up!")
 		timer.stop()
+
+		for button in button_group:
+			button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 func update_timer_display() -> void:
 	if timer_value >= 0:
