@@ -1,11 +1,17 @@
 extends Node
 
 signal on_question_show
+signal on_answer_action
 
+@export_category("Labels")
 @export var question_label: Label
 @export var timer_label: Label
 @export var question_number_label: Label
+@export var score_label: Label
+
+@export_category("Buttons")
 @export var button_group: Array[Button] = []
+@export var next_question_button: Button
 
 @onready var timer: Timer = $Timer
 
@@ -14,98 +20,96 @@ var current_question_index: int = 0
 var timer_value: int = 0
 var correct_answer_index: int = 0
 var max_question: int = 5
+var score: int = 0
 
-func _ready():
+func _ready() -> void:
 	load_questions()
 	show_question(current_question_index)
 
+	# Connect button press events for each answer button
 	for button in button_group:
 		button.connect("pressed", Callable(self, "_on_choice_pressed").bind(button_group.find(button)))
+	
+	# Connect the "Next Question" button
+	next_question_button.connect("pressed", Callable(self, "show_next_question"))
+	next_question_button.hide()
 
-# Load the questions from the JSON file
-# This function reads the JSON file, parses the content and stores it in the question array
-# The questions are then shuffled to randomize the order
 func load_questions() -> void:
+	# Load and parse the questions from a JSON file
 	var file = FileAccess.open("res://Questions/Questions.json", FileAccess.READ)
 
 	if file:
-		var json_data = file.get_as_text()
-		question = JSON.parse_string(json_data)
+		question = JSON.parse_string(file.get_as_text())
 		file.close()
+		question.shuffle()
 	else:
 		print("Failed to open file or file does not exist")
-	
-	question.shuffle()
 
-# Shows the question and its choices to the user
-# The question is fetched from the question array based on the given index
-# The timer is started with the time given in the question data
-# The correct answer is shuffled along with the other choices
-# The correct answer index is stored in correct_answer_index
 func show_question(index: int) -> void:
 	var question_data = question[index]
 	question_label.text = question_data["question"]
 	timer_value = question_data["time"]
 	correct_answer_index = question_data["answer"]
 
-	question_number_label.text = "Question " + str(current_question_index + 1) + " / " + str(max_question)
+	question_number_label.text = "Question " + str(index + 1) + " / " + str(max_question)
 	update_timer_display()
 
+	# Shuffle and assign choices to buttons
 	var choices = question_data["choices"].duplicate()
 	var correct_answer = choices[correct_answer_index]
 	choices.shuffle()
-
 	correct_answer_index = choices.find(correct_answer)
 
-	# This loop assigns the choices to the buttons and removes focus from any of them
-	var i: int = 0
-	for button in button_group:
-		_remove_button_focus(button)
+	for i in range(button_group.size()):
+		var button = button_group[i]
+		button.modulate = Color(1, 1, 1) # Reset appearance
+		button.mouse_filter = Control.MOUSE_FILTER_PASS
 		button.text = choices[i]
-		i += 1
 
 	on_question_show.emit()
 	timer.start()
 
-# Handles the event when a choice is pressed.
-# Checks if the selected choice is correct and shows feedback.
-# Then moves to the next question or ends the game if all questions have been answered.
 func _on_choice_pressed(choice_index: int) -> void:
-	if choice_index == correct_answer_index:
-		show_feedback(true)
-	else:
-		show_feedback(false)
-		
-	current_question_index += 1
+	on_answer_action.emit()
+	timer.stop()
+
+	var is_correct = (choice_index == correct_answer_index)
+	if is_correct:
+		score += 1
 	
-	# Check if there are more questions to show and if the current question index is within the bounds of the maximum number of questions
-	if current_question_index < max_question and current_question_index < question.size():
+	score_label.text = "Score: " + str(score)
+	show_feedback(is_correct, choice_index)
+	next_question_button.show()
+
+func show_next_question() -> void:
+	if current_question_index + 1 < max_question and current_question_index + 1 < question.size():
+		current_question_index += 1
+		next_question_button.hide()
 		show_question(current_question_index)
 	else:
-		print("Game over!")
+		print("Game over! Final score: ", score)
+
+func update_timer_display() -> void:
+	timer_label.text = str(timer_value)
 
 func _on_timer_timeout() -> void:
 	timer_value -= 1
 	update_timer_display()
 
 	if timer_value <= 0:
-		print("Time's up!")
 		timer.stop()
+		print("Time's up!")
+		disable_buttons()
+		show_feedback(false, correct_answer_index)
+		next_question_button.show()
 
-		for button in button_group:
-			button.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	
-func update_timer_display() -> void:
-	if timer_value >= 0:
-		timer_label.text = str(timer_value)
-	
+func show_feedback(is_correct: bool, choice_index: int) -> void:
+	# Disable all buttons and highlight the selected answer
+	disable_buttons()
 
-func show_feedback(is_correct: bool) -> void:
-	if is_correct:
-		print("Correct!")
-	else:
-		print("Incorrect!")
-	
-func _remove_button_focus(button: Button) -> void:
-	if button.has_focus():
-			button.release_focus()
+	button_group[choice_index].modulate = Color(0, 1, 0) if is_correct else Color(1, 0, 0)
+	button_group[correct_answer_index].modulate = Color(0, 1, 0) # Highlight the correct answer
+
+func disable_buttons() -> void:
+	for button in button_group:
+		button.mouse_filter = Control.MOUSE_FILTER_IGNORE
