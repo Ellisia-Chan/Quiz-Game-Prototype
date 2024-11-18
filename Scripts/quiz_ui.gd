@@ -1,5 +1,7 @@
 extends Node
 
+signal on_question_show
+
 @export var question_label: Label
 @export var timer_label: Label
 @export var question_number_label: Label
@@ -46,7 +48,7 @@ func show_question(index: int) -> void:
 	timer_value = question_data["time"]
 	correct_answer_index = question_data["answer"]
 
-	question_number_label.text = str(current_question_index + 1) + " / " + str(max_question)
+	question_number_label.text = "Question " + str(current_question_index + 1) + " / " + str(max_question)
 	update_timer_display()
 
 	var choices = question_data["choices"].duplicate()
@@ -58,13 +60,12 @@ func show_question(index: int) -> void:
 	# This loop assigns the choices to the buttons and removes focus from any of them
 	var i: int = 0
 	for button in button_group:
-		if button.has_focus():
-			button.release_focus()
-			
+		_remove_button_focus(button)
 		button.text = choices[i]
 		i += 1
 
-	timer.start(1)
+	on_question_show.emit()
+	timer.start()
 
 # Handles the event when a choice is pressed.
 # Checks if the selected choice is correct and shows feedback.
@@ -77,6 +78,7 @@ func _on_choice_pressed(choice_index: int) -> void:
 		
 	current_question_index += 1
 	
+	# Check if there are more questions to show and if the current question index is within the bounds of the maximum number of questions
 	if current_question_index < max_question and current_question_index < question.size():
 		show_question(current_question_index)
 	else:
@@ -103,3 +105,7 @@ func show_feedback(is_correct: bool) -> void:
 		print("Correct!")
 	else:
 		print("Incorrect!")
+	
+func _remove_button_focus(button: Button) -> void:
+	if button.has_focus():
+			button.release_focus()
