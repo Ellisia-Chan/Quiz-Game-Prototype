@@ -79,6 +79,10 @@ func _on_choice_pressed(choice_index: int) -> void:
 	
 	score_label.text = "Score: " + str(score)
 	show_feedback(is_correct, choice_index)
+	
+	if current_question_index == max_question - 1:
+		next_question_button.text = "Finish"
+
 	next_question_button.show()
 
 func show_next_question() -> void:
