@@ -14,3 +14,8 @@ config/name="Quiz Game"
 run/main_scene="res://Scene/Game Scenes/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720

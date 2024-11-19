@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dyjlvsfvik7vy"]
 
-[ext_resource type="Script" path="res://Scripts/quiz_ui.gd" id="1_mn5nq"]
-[ext_resource type="Script" path="res://Scripts/timer_bar.gd" id="2_rp7mo"]
-[ext_resource type="Script" path="res://Scripts/result_ui.gd" id="3_wo70l"]
+[ext_resource type="Script" path="res://scripts/quiz_ui.gd" id="1_mn5nq"]
+[ext_resource type="Script" path="res://scripts/quiz_timer_bar.gd" id="2_rp7mo"]
+[ext_resource type="Script" path="res://scripts/quiz_result_ui.gd" id="3_wo70l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mjys"]
 
@@ -11,7 +11,7 @@ bg_color = Color(1, 0, 0, 1)
 
 [node name="QuizUI" type="Node"]
 
-[node name="QuizUI" type="Control" parent="." node_paths=PackedStringArray("question_label", "timer_label", "question_number_label", "score_label", "button_group", "next_question_button")]
+[node name="MainQuizUI" type="Control" parent="." node_paths=PackedStringArray("question_label", "timer_label", "question_number_label", "score_label", "button_group", "next_question_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,7 +26,7 @@ score_label = NodePath("Panel/ScoreLabel")
 button_group = [NodePath("MarginContainer/HBoxContainer/VBoxContainer/Button1"), NodePath("MarginContainer/HBoxContainer/VBoxContainer/Button2"), NodePath("MarginContainer/HBoxContainer/VBoxContainer2/Button3"), NodePath("MarginContainer/HBoxContainer/VBoxContainer2/Button4")]
 next_question_button = NodePath("NextQuestionButton")
 
-[node name="Panel" type="Panel" parent="QuizUI"]
+[node name="Panel" type="Panel" parent="MainQuizUI"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -37,7 +37,7 @@ offset_right = 365.0
 offset_bottom = 280.0
 grow_horizontal = 2
 
-[node name="QuestionLabel" type="Label" parent="QuizUI/Panel"]
+[node name="QuestionLabel" type="Label" parent="MainQuizUI/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,7 +53,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 24
 text = "Test Label"
 
-[node name="TimerLabel" type="Label" parent="QuizUI/Panel"]
+[node name="TimerLabel" type="Label" parent="MainQuizUI/Panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -68,7 +68,7 @@ text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="QuestionNumberLabel" type="Label" parent="QuizUI/Panel"]
+[node name="QuestionNumberLabel" type="Label" parent="MainQuizUI/Panel"]
 layout_mode = 1
 offset_top = -50.0
 offset_right = 100.0
@@ -79,7 +79,7 @@ text = "Question 1 / 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreLabel" type="Label" parent="QuizUI/Panel"]
+[node name="ScoreLabel" type="Label" parent="MainQuizUI/Panel"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -94,7 +94,7 @@ text = "Score: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="QuizUI"]
+[node name="MarginContainer" type="MarginContainer" parent="MainQuizUI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -108,48 +108,48 @@ offset_bottom = 176.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="QuizUI/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainQuizUI/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="QuizUI/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainQuizUI/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="Button1" type="Button" parent="QuizUI/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Button1" type="Button" parent="MainQuizUI/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Button 1
 "
 
-[node name="Button2" type="Button" parent="QuizUI/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Button2" type="Button" parent="MainQuizUI/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Button 2"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="QuizUI/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MainQuizUI/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="Button3" type="Button" parent="QuizUI/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="Button3" type="Button" parent="MainQuizUI/MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Button 3"
 
-[node name="Button4" type="Button" parent="QuizUI/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="Button4" type="Button" parent="MainQuizUI/MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Button 4
 "
 
-[node name="Timer" type="Timer" parent="QuizUI"]
+[node name="Timer" type="Timer" parent="MainQuizUI"]
 
-[node name="TimerBar" type="ProgressBar" parent="QuizUI"]
+[node name="TimerBar" type="ProgressBar" parent="MainQuizUI"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -161,7 +161,7 @@ value = 100.0
 show_percentage = false
 script = ExtResource("2_rp7mo")
 
-[node name="NextQuestionButton" type="Button" parent="QuizUI"]
+[node name="NextQuestionButton" type="Button" parent="MainQuizUI"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -247,4 +247,4 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Main Menu"
 
-[connection signal="timeout" from="QuizUI/Timer" to="QuizUI" method="_on_timer_timeout"]
+[connection signal="timeout" from="MainQuizUI/Timer" to="MainQuizUI" method="_on_timer_timeout"]
