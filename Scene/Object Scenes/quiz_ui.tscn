@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dyjlvsfvik7vy"]
+[gd_scene load_steps=6 format=3 uid="uid://dyjlvsfvik7vy"]
 
 [ext_resource type="Script" path="res://Scripts/quiz_ui.gd" id="1_mn5nq"]
 [ext_resource type="Script" path="res://Scripts/timer_bar.gd" id="2_rp7mo"]
+[ext_resource type="Script" path="res://Scripts/result_ui.gd" id="3_wo70l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mjys"]
 
@@ -175,5 +176,75 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Next"
+
+[node name="ResultUI" type="Control" parent="." node_paths=PackedStringArray("score_label", "retry_button", "main_menu_button")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_wo70l")
+score_label = NodePath("Panel/ScoreLabel")
+retry_button = NodePath("MarginContainer/VBoxContainer/Button1")
+main_menu_button = NodePath("MarginContainer/VBoxContainer/Button2")
+
+[node name="Panel" type="Panel" parent="ResultUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -275.0
+offset_top = 80.0
+offset_right = 275.0
+offset_bottom = 320.0
+grow_horizontal = 2
+
+[node name="ScoreLabel" type="Label" parent="ResultUI/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -75.0
+offset_right = 150.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "Final Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ResultUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 56.0
+offset_right = 100.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResultUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Button1" type="Button" parent="ResultUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Retry"
+
+[node name="Button2" type="Button" parent="ResultUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Main Menu"
 
 [connection signal="timeout" from="QuizUI/Timer" to="QuizUI" method="_on_timer_timeout"]

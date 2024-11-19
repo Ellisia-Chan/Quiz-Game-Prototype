@@ -10,6 +10,7 @@ func _ready():
 	quiz_ui_script = get_parent()
 	quiz_ui_script.connect("on_question_show", Callable(self, "_update_progress_bar"))
 	quiz_ui_script.connect("on_answer_action", Callable(self, "_stop_progress_bar"))
+	quiz_ui_script.connect("on_quiz_finish", Callable(self, "_stop_timer_completely"))
 
 func _process(delta):
 	# Update progress bar if there's a timer active
@@ -32,3 +33,7 @@ func _update_progress_bar():
 
 func _stop_progress_bar():
 	is_countdown = false
+
+func _stop_timer_completely():
+	set_process(false)
+	print("Timer stopped")
